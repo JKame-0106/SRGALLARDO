@@ -33,9 +33,22 @@ public class Projectile : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         Enemy enemy = other.GetComponent<Enemy>();
+
         if (enemy != null)
         {
-            int iDamageFinal = (eAmmoType == enemy.GetEnemyType()) ? iMaxDamage : iChipDamage;
+            bool bSameColor = (eAmmoType == enemy.GetEnemyType());
+            int iDamageFinal;
+
+            if (ShopManager.Instance != null)
+            {
+                iDamageFinal = bSameColor
+                ? ShopManager.Instance.GetDamage(eAmmoType) : ShopManager.Instance.GetChipDamage();
+            }
+            else
+            {
+                iDamageFinal = bSameColor ? iMaxDamage : iChipDamage;
+            }
+
             enemy.TakeDamage(iDamageFinal);
             Destroy(gameObject);
         }

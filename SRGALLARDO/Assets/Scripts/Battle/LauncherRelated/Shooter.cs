@@ -34,6 +34,11 @@ public class Shooter : MonoBehaviour
 
     void Shoot(EColorType eEggType)
     {
+        if (ResourceManager.Instance != null && !ResourceManager.Instance.TryUseAmmo(eEggType))
+        {
+            return;
+        }
+
         Transform tFirePoint = laneMovement.GetCurrentFirePoint();
         if (tFirePoint == null) return;
 
@@ -46,6 +51,11 @@ public class Shooter : MonoBehaviour
         }
 
         fFireCooldown = fFireRate;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayShoot();
+        }
     }
 
 }
