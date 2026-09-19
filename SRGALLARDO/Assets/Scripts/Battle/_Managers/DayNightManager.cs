@@ -28,8 +28,18 @@ public class DayNightManager : MonoBehaviour
     [SerializeField] private float fMeantimeDuration = 10f;
     [SerializeField] private float fSpeedMultiplierStart = 1f;
     [SerializeField] private float fSpeedMultiplierFinal = 2f;
+    [SerializeField] private UIScreen uiScreen;
 
-    private int iActualDay = 1;
+    private int _iActualDay = 1;
+    private int iActualDay
+    {
+        get { return _iActualDay; }
+        set
+        {
+            _iActualDay = value;
+            uiScreen.dayCount.text = "Day " + _iActualDay;
+        }
+    }
     private int iActualWave = 0;
     private EGamePhase eActualPhase = EGamePhase.Day;
 
@@ -45,6 +55,7 @@ public class DayNightManager : MonoBehaviour
 
     void Start()
     {
+        iActualDay = 1;
         StartPhaseDay();
     }
 
@@ -62,7 +73,7 @@ public class DayNightManager : MonoBehaviour
     public void StartNight()
     {
         Debug.Log("StartNight() llamado. Fase actual: " + eActualPhase + " | TimeScale: " + Time.timeScale);
-
+        uiScreen.isSleeping = true;
         if (eActualPhase != EGamePhase.Day) return;
         StartCoroutine(NightSecuence());
     }

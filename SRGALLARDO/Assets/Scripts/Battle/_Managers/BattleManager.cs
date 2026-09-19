@@ -7,6 +7,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("Configuración de Derrota")]
     [SerializeField] private int iMaxEnemiesReachedCoop = 5;
+    [SerializeField] UIScreen uiScreen;
 
     private int iEnemiesReachedCoop = 0;
     private bool bGameOver = false;
@@ -26,6 +27,7 @@ public class BattleManager : MonoBehaviour
         if (bGameOver) return;
 
         iEnemiesReachedCoop++;
+        uiScreen.HurtGallardo();
         Debug.Log("Enemigos infiltrados en las instalaciones: " + iEnemiesReachedCoop + "/" + iMaxEnemiesReachedCoop);
 
         if (iEnemiesReachedCoop >= iMaxEnemiesReachedCoop)

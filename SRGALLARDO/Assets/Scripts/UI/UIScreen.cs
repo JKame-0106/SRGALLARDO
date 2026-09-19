@@ -25,15 +25,28 @@ public class UIScreen : MonoBehaviour
     [SerializeField]  Sprite gallardoSleepHurt;
     [SerializeField]  Sprite gallardoHurt;
     [Header("Textos")]
-    [SerializeField]  TMP_Text seedCount;
-    [SerializeField]  TMP_Text blueEggCount;
-    [SerializeField]  TMP_Text redEggCount;
-    [SerializeField]  TMP_Text greenEggCount;
-    [SerializeField]  TMP_Text waveCount;
-    [SerializeField]  TMP_Text dayCount;
+    [SerializeField]  public TMP_Text seedCount;
+    [SerializeField]  public TMP_Text blueEggCount;
+    [SerializeField]  public TMP_Text redEggCount;
+    [SerializeField]  public TMP_Text greenEggCount;
+    [SerializeField]  public TMP_Text waveCount;
+    [SerializeField]  public TMP_Text dayCount;
     [Header("Misc")]
     private Coroutine hurtCoroutineInstance;
-    [SerializeField]private bool isSleeping;
+
+    bool _isSleeping = false;
+    public bool isSleeping
+    {
+        get
+        {
+            return  _isSleeping;
+        }
+        set
+        {
+            gallardo.sprite = value ?  gallardoSleepMask : gallardoSunglasses;
+            _isSleeping = value;
+        }
+    }
     void Start()
     {
         //TODO

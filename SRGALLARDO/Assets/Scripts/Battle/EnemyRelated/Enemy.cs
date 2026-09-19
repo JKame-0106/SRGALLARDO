@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Sprites por tipos: R-A-V")]
     [SerializeField] private Sprite[] arrSpritesPerType;
-
+    
     private SpriteRenderer spriteRenderer;
     private bool bIsHere = false;
     private float fSpeedMultiplier = 1f;
