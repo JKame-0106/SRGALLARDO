@@ -34,10 +34,23 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void HealCoop(int iAmount)
+    {
+        if (bGameOver) return;
+
+        iEnemiesReachedCoop = Mathf.Max(0, iEnemiesReachedCoop - iAmount);
+        Debug.Log("Se ha encontrado un infiltrado!! Enemigos en el gallinero: " + iEnemiesReachedCoop + "/" + iMaxEnemiesReachedCoop);
+    }
+
     void GameOver()
     {
         bGameOver = true;
         Debug.Log("GAME OVER - Gallardo ha perdido todo...");
+
+        if (DayNightManager.Instance != null)
+        {
+            DayNightManager.Instance.ForceGameOver();
+        }
 
         Time.timeScale = 0f;
     }

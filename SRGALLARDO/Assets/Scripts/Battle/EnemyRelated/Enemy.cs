@@ -1,5 +1,6 @@
 using UnityEditor.Build.Content;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class Enemy : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private bool bIsHere = false;
+    private float fSpeedMultiplier = 1f;
+    private float fHealthMultiplier = 1f;
+    private float fCornMultiplier = 1f;
 
     void Awake() 
     {
@@ -84,11 +88,13 @@ public class Enemy : MonoBehaviour
     }
     void Die()
     {
+        int iCornFinal= Mathf.RoundToInt(iCornDrop * fCornMultiplier);
+
         Debug.Log(eEnemyType + " derrotado. Suelta " + iCornDrop + " de maiz.");
 
         if (ResourceManager.Instance != null)
         {
-            ResourceManager.Instance.AddCorn(iCornDrop);
+            ResourceManager.Instance.AddCorn(iCornFinal);
         }
 
         if (AudioManager.Instance != null)
@@ -107,6 +113,21 @@ public class Enemy : MonoBehaviour
         {
             spriteRenderer.sprite = arrSpritesPerType[iIndex];
         }
+    }
+
+    public void ApplySpeedMultiplier(float fMultiplier)
+    {
+        fSpeedMultiplier = fMultiplier;
+    }
+
+    public void ApplyHealthMultiplier(float fMultiplier)
+    {
+        fHealthMultiplier = fMultiplier;
+    }
+
+    public void ApplyCornMultiplier(float fMultiplier)
+    {
+        fCornMultiplier = fMultiplier;
     }
 
     public EColorType GetEnemyType()=> eEnemyType;
