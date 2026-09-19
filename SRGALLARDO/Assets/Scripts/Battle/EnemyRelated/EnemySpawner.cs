@@ -19,11 +19,12 @@ public class EnemySpawner : MonoBehaviour
  [SerializeField] private float fCornMultiplier = 1f;
 
  [Header("Ritmo de aparicion")]
-[SerializeField] private float fBaseSpawnInterval = 2f; 
-[SerializeField] private float fMinSpawnInterval = 0.4f; 
-[SerializeField] private bool bSpawnActivo = true;
+ [SerializeField] private float fBaseSpawnInterval = 2f; 
+ [SerializeField] private float fMinSpawnInterval = 0.4f; 
+ [SerializeField] private bool bActiveSpawn = true;
 
  private float fTimer = 0f;
+
 
  void Update()
     {

@@ -9,6 +9,8 @@ public class AudioManager : MonoBehaviour
 
     // Audio Mixer Groups para controlar el volumen maestro de cada categoría//
     [Header("Audio Mixer Group")]
+    [Header("Mixer Principal")]
+    [SerializeField] private AudioMixer mainMixer; // controlara el  volumen global
     [SerializeField] private AudioMixerGroup musicGroup;
     [SerializeField] private AudioMixerGroup ambientGroup;
     [SerializeField] private AudioMixerGroup sfxGroup;
@@ -186,5 +188,31 @@ public class AudioManager : MonoBehaviour
         if (clip == null || sfxSource == null) return;
         sfxSource.pitch = Random.Range(0.9f, 1.1f);
         sfxSource.PlayOneShot(clip);
+    }
+
+
+    //  CONTROL DE VOLUMEN (UI SLIDER) 
+    public void SetMasterVolume(float sliderValue)
+    {
+        // sube y baja volumen de forma logaritmica para que el slider sea mas natural al oido 
+        float val = Mathf.Max(0.0001f, sliderValue);
+        mainMixer.SetFloat("MasterVolume", Mathf.Log10(val) * 20f);
+
+    }
+
+    // FIN DEL JUEGO (VICTORIA / GAME OVER)
+
+    public void PlayVictory()
+    {
+        // Recicla la música del menú principal 
+        PlayMusic(introMusic);
+        if (ambientSource) ambientSource.Stop();
+    }
+
+    public void PlayGameOver()
+    {
+        // Mantiene la música  de la noche
+        PlayMusic(nightMusic);
+        if (ambientSource) ambientSource.Stop();
     }
 }
