@@ -1,16 +1,94 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIScreen : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Audio")]
+    [SerializeField] public AudioSource UiAudioSourceChannel1;
+    [SerializeField] public AudioSource UiAudioSourceChannel2;
+    [SerializeField] public AudioSource UiAudioSourceChannel3;
+    /*Audioclips IDs:
+     0-Alarm.mp3
+     1-
+     2-
+     3-     
+     */
+    [SerializeField]  AudioClip[] audioClips;
+    [Header("Fabricas")]
+    [SerializeField]  UIFactory[] Uifactories;
+    [SerializeField]  Image gallardo;
+    [Header("Sprites")]
+    [SerializeField]  Sprite gallardoSunglasses;
+    [SerializeField]  Sprite gallardoSleepMask;
+    [SerializeField]  Sprite gallardoSleepHurt;
+    [SerializeField]  Sprite gallardoHurt;
+    [Header("Textos")]
+    [SerializeField]  TMP_Text seedCount;
+    [SerializeField]  TMP_Text blueEggCount;
+    [SerializeField]  TMP_Text redEggCount;
+    [SerializeField]  TMP_Text greenEggCount;
+    [SerializeField]  TMP_Text waveCount;
+    [SerializeField]  TMP_Text dayCount;
+    [Header("Misc")]
+    private Coroutine hurtCoroutineInstance;
+    [SerializeField]private bool isSleeping;
     void Start()
     {
-        
+        //TODO
     }
-
-    // Update is called once per frame
     void Update()
     {
+        //TODO
+    }
+
+    public void HurtGallardo()
+    {
+        if (hurtCoroutineInstance != null)
+        {
+            StopCoroutine(hurtCoroutineInstance);
+            hurtCoroutineInstance = null;
+        }
+        hurtCoroutineInstance = StartCoroutine(GallardoHurt());
         
+    }
+    public void Repair(int factoryID) //cambiar parametro a algo mas de ser necesario
+    {
+        //Reparar la fabrica
+        //TODO
+    }
+    public void Upgrade(int factoryID) //cambiar parametro a algo mas de ser necesario
+    {
+        //Mejorar la fabrica
+        //TODO
+    }
+    
+
+    public IEnumerator GallardoHurt()
+    {
+        AudioSource activeChannel= SelectAudioChannel();
+        gallardo.sprite = isSleeping ? gallardoSleepHurt : gallardoHurt;
+        activeChannel.clip = audioClips[0];
+        activeChannel.Play();
+        yield return new WaitForSeconds(1);
+        gallardo.sprite = isSleeping ?  gallardoSleepMask : gallardoSunglasses;
+    }
+
+    AudioSource SelectAudioChannel()
+    {
+        if (!UiAudioSourceChannel1.isPlaying)
+        {
+            return UiAudioSourceChannel1;
+        }
+        else if (!UiAudioSourceChannel2.isPlaying)
+        {
+            return UiAudioSourceChannel2;
+        }
+        else if (!UiAudioSourceChannel3.isPlaying)
+        {
+            return UiAudioSourceChannel3;
+        }
+        else return UiAudioSourceChannel1;
     }
 }
