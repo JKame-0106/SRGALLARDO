@@ -23,11 +23,16 @@ public class BattleManager : MonoBehaviour
 
     public void RegisterEnemyReachedCoop()
     {
-        if (bGameOver) return;
-
         iEnemiesReachedCoop++;
+        
+    if (uiScreen != null)
+    {
         uiScreen.HurtGallardo();
-        Debug.Log("Enemigos infiltrados en las instalaciones: " + iEnemiesReachedCoop + "/" + iMaxEnemiesReachedCoop);
+    }
+    else
+    {
+        Debug.LogWarning("[BattleManager] UIScreen no está asignado en el Inspector, no se puede hacer la animación de daño.");
+    }
 
         if (iEnemiesReachedCoop >= iMaxEnemiesReachedCoop)
         {

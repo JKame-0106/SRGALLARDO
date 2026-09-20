@@ -41,8 +41,14 @@ public class ShopManager : MonoBehaviour
     {
         int iCost = GetBuyEggCost(eColorType);
 
-        if (ResourceManager.Instance == null || !ResourceManager.Instance.SpendCorn(iCost))
-        return false;
+        if (ResourceManager.Instance == null)
+        {
+            Debug.LogError("[ShopManager] ¡ERROR CRÍTICO! ResourceManager.Instance no existe en la escena. Asegúrate de que el script ResourceManager esté en algún GameObject.");
+            return false;
+        }
+        
+        if (!ResourceManager.Instance.SpendCorn(iCost))
+            return false;
 
         ResourceManager.Instance.AddAmmo(eColorType, GetEggsPerPurchase(eColorType));
         return true;
@@ -62,8 +68,14 @@ public class ShopManager : MonoBehaviour
         int iIndex = (int)eColorType;
         int iCost = GetUpgradeCost(iBaseDamageUpgradeCost, arrDamageLevel[iIndex]);
 
-        if (ResourceManager.Instance == null || !ResourceManager.Instance.SpendCorn(iCost))
-        return false;
+        if (ResourceManager.Instance == null)
+        {
+            Debug.LogError("[ShopManager] ¡ERROR CRÍTICO! ResourceManager.Instance no existe en la escena para comprar la mejora.");
+            return false;
+        }
+
+        if (!ResourceManager.Instance.SpendCorn(iCost))
+            return false;
 
         arrDamageLevel[iIndex]++;
         return true;
@@ -84,8 +96,14 @@ public class ShopManager : MonoBehaviour
         int iIndex = (int)eColorType;
         int iCost = GetUpgradeCost(iBaseProductionUpgradeCost, arrProductionLevel[iIndex]);
 
-        if (ResourceManager.Instance == null || !ResourceManager.Instance.SpendCorn(iCost))
-        return false;
+        if (ResourceManager.Instance == null)
+        {
+            Debug.LogError("[ShopManager] ¡ERROR CRÍTICO! ResourceManager.Instance no existe en la escena para comprar la mejora.");
+            return false;
+        }
+
+        if (!ResourceManager.Instance.SpendCorn(iCost))
+            return false;
 
         arrProductionLevel[iIndex]++;
         return true;

@@ -55,10 +55,10 @@ public class UIScreen : MonoBehaviour
     {
         if (ResourceManager.Instance != null)
         {
-            if (seedCount != null) seedCount.text = ResourceManager.Instance.GetCorn().ToString();
-            if (blueEggCount != null) blueEggCount.text = ResourceManager.Instance.GetAmmo(EColorType.Azul).ToString();
-            if (redEggCount != null) redEggCount.text = ResourceManager.Instance.GetAmmo(EColorType.Rosado).ToString();
-            if (greenEggCount != null) greenEggCount.text = ResourceManager.Instance.GetAmmo(EColorType.Verde).ToString();
+            if (seedCount != null) seedCount.text = "MaÃz: " + ResourceManager.Instance.GetCorn().ToString();
+            if (blueEggCount != null) blueEggCount.text = "Azul: " + ResourceManager.Instance.GetAmmo(EColorType.Azul).ToString();
+            if (redEggCount != null) redEggCount.text = "Rosado: " + ResourceManager.Instance.GetAmmo(EColorType.Rosado).ToString();
+            if (greenEggCount != null) greenEggCount.text = "Verde: " + ResourceManager.Instance.GetAmmo(EColorType.Verde).ToString();
         }
 
         if (DayNightManager.Instance != null)
@@ -90,16 +90,7 @@ public class UIScreen : MonoBehaviour
         hurtCoroutineInstance = StartCoroutine(GallardoHurt());
         
     }
-    public void Repair(int factoryID) //cambiar parametro a algo mas de ser necesario
-    {
-        //Reparar la fabrica
-        //TODO
-    }
-    public void Upgrade(int factoryID) //cambiar parametro a algo mas de ser necesario
-    {
-        //Mejorar la fabrica
-        //TODO
-    }
+
     
 
     public IEnumerator GallardoHurt()

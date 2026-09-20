@@ -41,4 +41,54 @@ public class ShopUI : MonoBehaviour
                 row.txtBuyCost.text = ShopManager.Instance.GetBuyEggCost(row.eTipo).ToString();
         }
     }
+
+    // Methods for Unity UI Buttons OnClick events:
+    
+    public void BuyEggs(int iColorIndex)
+    {
+        if (ShopManager.Instance != null)
+        {
+            EColorType eColorType = (EColorType)iColorIndex;
+            if (ShopManager.Instance.TryBuyEggs(eColorType))
+            {
+                Debug.Log($"[ShopUI] Comprados huevos para {eColorType}");
+            }
+            else
+            {
+                Debug.LogWarning($"[ShopUI] No hay suficiente maíz para comprar huevos de {eColorType}");
+            }
+        }
+    }
+
+    public void UpgradeDamage(int iColorIndex)
+    {
+        if (ShopManager.Instance != null)
+        {
+            EColorType eColorType = (EColorType)iColorIndex;
+            if (ShopManager.Instance.TryUpgradeDamage(eColorType))
+            {
+                Debug.Log($"[ShopUI] Daño mejorado para {eColorType}");
+            }
+            else
+            {
+                Debug.LogWarning($"[ShopUI] No hay suficiente maíz para mejorar el daño de {eColorType}");
+            }
+        }
+    }
+
+    public void UpgradeProduction(int iColorIndex)
+    {
+        if (ShopManager.Instance != null)
+        {
+            EColorType eColorType = (EColorType)iColorIndex;
+            if (ShopManager.Instance.TryUpgradeProduction(eColorType))
+            {
+                Debug.Log($"[ShopUI] Producción mejorada para {eColorType}");
+            }
+            else
+            {
+                Debug.LogWarning($"[ShopUI] No hay suficiente maíz para mejorar la producción de {eColorType}");
+            }
+        }
+    }
 }
