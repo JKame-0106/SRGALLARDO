@@ -44,7 +44,7 @@ AudioSource:
   m_GameObject: {fileID: 483276689536471917}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8581792516206912956, guid: b1334ec037d6ef2409dff2f6bd63d35d, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -141,7 +141,7 @@ AudioSource:
   m_GameObject: {fileID: 483276689536471917}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 4087692200536324629, guid: b1334ec037d6ef2409dff2f6bd63d35d, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -238,7 +238,7 @@ AudioSource:
   m_GameObject: {fileID: 483276689536471917}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 838995956259414141, guid: b1334ec037d6ef2409dff2f6bd63d35d, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -338,7 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e18cadfac6d32446879eaf53209e32d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  mainMixer: {fileID: 24100000, guid: b1334ec037d6ef2409dff2f6bd63d35d, type: 2}
   musicGroup: {fileID: -8581792516206912956, guid: b1334ec037d6ef2409dff2f6bd63d35d, type: 2}
   ambientGroup: {fileID: 4087692200536324629, guid: b1334ec037d6ef2409dff2f6bd63d35d, type: 2}
   sfxGroup: {fileID: 838995956259414141, guid: b1334ec037d6ef2409dff2f6bd63d35d, type: 2}
