@@ -53,7 +53,31 @@ public class UIScreen : MonoBehaviour
     }
     void Update()
     {
-        //TODO
+        if (ResourceManager.Instance != null)
+        {
+            if (seedCount != null) seedCount.text = ResourceManager.Instance.GetCorn().ToString();
+            if (blueEggCount != null) blueEggCount.text = ResourceManager.Instance.GetAmmo(EColorType.Azul).ToString();
+            if (redEggCount != null) redEggCount.text = ResourceManager.Instance.GetAmmo(EColorType.Rosado).ToString();
+            if (greenEggCount != null) greenEggCount.text = ResourceManager.Instance.GetAmmo(EColorType.Verde).ToString();
+        }
+
+        if (DayNightManager.Instance != null)
+        {
+            if (waveCount != null)
+            {
+                EGamePhase phase = DayNightManager.Instance.GetActualPhase();
+                if (phase == EGamePhase.Day)
+                    waveCount.text = "Tienda";
+                else if (phase == EGamePhase.Night)
+                    waveCount.text = "Oleada " + DayNightManager.Instance.GetActualWave();
+                else if (phase == EGamePhase.Meantime)
+                    waveCount.text = "Descanso";
+                else if (phase == EGamePhase.Victory)
+                    waveCount.text = "Victoria";
+                else if (phase == EGamePhase.GameOver)
+                    waveCount.text = "Derrota";
+            }
+        }
     }
 
     public void HurtGallardo()

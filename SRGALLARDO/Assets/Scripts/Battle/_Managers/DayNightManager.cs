@@ -67,6 +67,9 @@ public class DayNightManager : MonoBehaviour
         if (enemySpawner != null)
             enemySpawner.SetActiveSpawn(false);
 
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayDayPhase();
+
         Debug.Log(" Dia" + iActualDay + " - Fase de compras");
     }
 
@@ -82,11 +85,16 @@ public class DayNightManager : MonoBehaviour
     {
         eActualPhase = EGamePhase.Night;
 
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayNightPhase();
+
         float fHealthMultiplier = arrHealthMultiplierPerDay[iActualDay - 1];
         float fCornMultiplier = arrCornMultiplierPerDay[iActualDay - 1];
         if (enemySpawner != null)
+        {
             enemySpawner.SetHealthMultiplier(fHealthMultiplier);
             enemySpawner.SetCornMultiplier(fCornMultiplier);
+        }
 
         Debug.Log("Dia " + iActualDay + " - Comienza la noche (vida enemiga x" + fHealthMultiplier + ")--");
 
@@ -163,6 +171,9 @@ public class DayNightManager : MonoBehaviour
 
         if (enemySpawner != null)
             enemySpawner.SetActiveSpawn(false);
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayVictory();
     }
 
     public void ForceGameOver()

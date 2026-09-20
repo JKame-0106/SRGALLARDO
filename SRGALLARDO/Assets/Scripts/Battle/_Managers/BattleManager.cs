@@ -1,4 +1,3 @@
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -48,6 +47,9 @@ public class BattleManager : MonoBehaviour
     {
         bGameOver = true;
         Debug.Log("GAME OVER - Gallardo ha perdido todo...");
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayGameOver();
 
         if (DayNightManager.Instance != null)
         {

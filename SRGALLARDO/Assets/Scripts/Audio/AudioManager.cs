@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    // Audio Mixer Groups para controlar el volumen maestro de cada categorÌa//
+    // Audio Mixer Groups para controlar el volumen maestro de cada categor√≠a//
     [Header("Audio Mixer Group")]
     [Header("Mixer Principal")]
     [SerializeField] private AudioMixer mainMixer; // controlara el  volumen global
@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource ambientSource;
     [SerializeField] private AudioSource sfxSource;
 
-    [Header("M˙sica y Ambientes")]
+    [Header("M√∫sica y Ambientes")]
     [SerializeField] private AudioClip introMusic;
     [SerializeField] private AudioClip dayMusic;
     [SerializeField] private AudioClip nightMusic;
@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip clipImpact;
     [SerializeField] private AudioClip clipReachedCoop; // Sonido de alarma cuando el enemigo entra a la granja
 
-    [Header("Clips de derota de enemigos R-A-V (¡guila, Serpiente, Lobo)")]
+    [Header("Clips de derota de enemigos R-A-V (√Åguila, Serpiente, Lobo)")]
     [SerializeField] private AudioClip[] arrClipsEnemyDefeatType;
 
     [Header("Clips de Tienda / UI")]
@@ -42,16 +42,16 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip clipButtonHover;
     [SerializeField] private AudioClip clipButtonClick;
 
-    [Header("Ajustes de Mezcla en  CÛdigo")]
-    //"El Volumen m·ximo al que llegar· la m˙sica despuÈs del crossfade."
+    [Header("Ajustes de Mezcla en  C√≥digo")]
+    //"El Volumen m√°ximo al que llegar√° la m√∫sica despu√©s del crossfade."
     [Range(0f, 1f)][SerializeField] private float musicVolume = 0.8f;
-    //"El Volumen m·ximo al que llegar· el ambiente despuÈs del crossfade."
+    //"El Volumen m√°ximo al que llegar√° el ambiente despu√©s del crossfade."
     [Range(0f, 1f)][SerializeField] private float ambientVolume = 0.45f;
-    //"El Volumen m·ximo al que llegar· el SFX despuÈs del crossfade."
+    //"El Volumen m√°ximo al que llegar√° el SFX despu√©s del crossfade."
     [SerializeField] private float crossfadeDuration = 2.0f;
 
 
-    // Referencias a las corrutinas actuales para poder detenerlas si el jugador cambia de fase muy r·pido
+    // Referencias a las corrutinas actuales para poder detenerlas si el jugador cambia de fase muy r√°pido
     private Coroutine musicCrossfadeRoutine;
     private Coroutine ambientCrossfadeRoutine;
 
@@ -77,10 +77,10 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    //CONTROL DE FASES (DÕA / NOCHE / MEN⁄)
+    //CONTROL DE FASES (D√çA / NOCHE / MEN√ö)
 
 
-    //Reproduce la m˙sica de inicio. Silencia los ambientes org·nicos.
+    //Reproduce la m√∫sica de inicio. Silencia los ambientes org√°nicos.
     public void PlayIntro()
     {
         PlayMusic(introMusic);
@@ -88,7 +88,7 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    /// Inicia la mezcla de audio para la oleada diurna (M˙sica DÌa + Ambiente DÌa).
+    /// Inicia la mezcla de audio para la oleada diurna (M√∫sica D√≠a + Ambiente D√≠a).
 
     public void PlayDayPhase()
     {
@@ -96,7 +96,7 @@ public class AudioManager : MonoBehaviour
         PlayAmbient(dayAmbient);
     }
 
-    /// Inicia la mezcla de audio para la oleada nocturna (M˙sica Noche + Ambiente Noche).
+    /// Inicia la mezcla de audio para la oleada nocturna (M√∫sica Noche + Ambiente Noche).
 
     public void PlayNightPhase()
     {
@@ -120,8 +120,21 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator CrossfadeSource(AudioSource source, AudioClip newClip, float targetVolume)
     {
-        // Si el clip que intentamos reproducir ya est· sonando, no hacemos nada.
-        if (source.clip == newClip && source.isPlaying) yield break;
+        // Si el clip ya es el correcto y est sonando
+        if (source.clip == newClip && source.isPlaying)
+        {
+            // Asegurar que suba el volumen si por error estaba en 0 (ej: Play On Awake)
+            if (source.volume < targetVolume)
+            {
+                while (source.volume < targetVolume)
+                {
+                    source.volume += targetVolume * Time.unscaledDeltaTime / crossfadeDuration;
+                    yield return null;
+                }
+                source.volume = targetVolume;
+            }
+            yield break;
+        }
 
         //  Fade Out (Bajar el volumen del clip actual hasta 0)
         if (source.isPlaying)
@@ -129,7 +142,7 @@ public class AudioManager : MonoBehaviour
             float startVol = source.volume;
             while (source.volume > 0)
             {
-                source.volume -= startVol * Time.deltaTime / crossfadeDuration;
+                source.volume -= startVol * Time.unscaledDeltaTime / crossfadeDuration;
                 yield return null;
             }
             source.Stop();
@@ -143,7 +156,7 @@ public class AudioManager : MonoBehaviour
         //  Fade In (Subir el volumen progresivamente hasta el targetVolume)
         while (source.volume < targetVolume)
         {
-            source.volume += targetVolume * Time.deltaTime / crossfadeDuration;
+            source.volume += targetVolume * Time.unscaledDeltaTime / crossfadeDuration;
             yield return null;
         }
 
@@ -155,12 +168,12 @@ public class AudioManager : MonoBehaviour
 
 
 
-    /// Reproduce el sonido del caÒÛn
+    /// Reproduce el sonido del ca√±√≥n
     public void PlayShoot()
     {
         PlaySFX(clipShoot);
     }
-    /// Reproduce el sonido h˙medo del huevo estrell·ndose.
+    /// Reproduce el sonido h√∫medo del huevo estrell√°ndose.
     public void PlayImpact() => PlaySFX(clipImpact);
     /// Dispara la alarma cuando un enemigo vulnera el granero.
     public void PlayReachedCoop() => PlaySFX(clipReachedCoop);
@@ -169,14 +182,14 @@ public class AudioManager : MonoBehaviour
     public void PlayEnemyDefeat(EColorType eNewType)
     {
         int iIndex = (int)eNewType;
-        // Verifica que el arreglo no estÈ vacÌo y que el Ìndice exista para evitar errores (IndexOutOfRange)
+        // Verifica que el arreglo no est√© vac√≠o y que el √≠ndice exista para evitar errores (IndexOutOfRange)
         if (arrClipsEnemyDefeatType != null && iIndex < arrClipsEnemyDefeatType.Length)
         {
             PlaySFX(arrClipsEnemyDefeatType[iIndex]);
         }
     }
 
-    // TIENDA Y MEN⁄ (UI)
+    // TIENDA Y MEN√ö (UI)
     public void PlayUpgrade() => PlaySFX(clipUpgrade);
     public void PlayRepair() => PlaySFX(clipRepair);
     public void PlayButtonHover() => PlaySFX(clipButtonHover);
@@ -204,14 +217,14 @@ public class AudioManager : MonoBehaviour
 
     public void PlayVictory()
     {
-        // Recicla la m˙sica del men˙ principal 
+        // Recicla la m√∫sica del men√∫ principal 
         PlayMusic(introMusic);
         if (ambientSource) ambientSource.Stop();
     }
 
     public void PlayGameOver()
     {
-        // Mantiene la m˙sica  de la noche
+        // Mantiene la m√∫sica  de la noche
         PlayMusic(nightMusic);
         if (ambientSource) ambientSource.Stop();
     }
